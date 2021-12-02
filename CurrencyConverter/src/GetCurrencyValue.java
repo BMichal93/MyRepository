@@ -11,7 +11,6 @@ public class GetCurrencyValue {
 			//options.addArguments("--headless");
 			
 		WebDriver driver = new ChromeDriver(options); 
-		driver.get("https://businessinsider.com.pl/finanse/kursy-walut");
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e1) {
@@ -19,15 +18,7 @@ public class GetCurrencyValue {
 			e1.printStackTrace();
 		} 
 		
-		WebElement consent = driver.findElement(By.xpath("/html/body/div[5]/div[1]/div[2]/div/div[6]/button[2]"));
-		boolean consentexist= driver.findElement(By.xpath("/html/body/div[5]/div[1]/div[2]/div/div[6]/button[2]")).isDisplayed();
-		//If popup appear click button
-			if(consentexist) {
-				consent.click();
-			}
-			else {
-				System.out.println("No consent window");
-			}
+		
 			
 			try {
 				Thread.sleep(3000);
@@ -36,22 +27,57 @@ public class GetCurrencyValue {
 				e2.printStackTrace();
 			} 
 			
-		if (curr == "EUR") {String curres = driver.findElement(By.xpath("/html/body/div[3]/main/section[4]/div//div/div/div/div/table/tbody/tr[36]/td[5]")).getText();
+		if (curr == "EUR") {
+			
+			driver.get("https://www.google.com/search?q=currency+converter&rlz=1C1AVFC_enPL907PL907&oq=currency+converter&aqs=chrome.0.69i59l2j0i512j0i395i512j0i20i263i395i512j69i60l3.11664j1j7&sourceid=chrome&ie=UTF-8");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e1) {
+				System.out.println("Website didnt open");
+				e1.printStackTrace();
+			} 
+			
+		String curres = driver.findElement(By.xpath("//*[@id=\"knowledge-currency__updatable-data-column\"]/div[1]/div[2]/span[1]")).getText();
 		double exchangerate = Double.parseDouble(curres);
 		driver.close();
 		return exchangerate;}
 		
-		else if (curr == "CHF") {String curres = driver.findElement(By.xpath("//*[@id=\"notoria-shadow-root\"]/div/div/div/table/tbody/tr[13]/td[5]")).getText();
+		else if (curr == "CHF") {
+			driver.get("https://www.google.com/search?q=pln+to+chf&rlz=1C1AVFC_enPL907PL907&oq=pln+to+chf&aqs=chrome..69i57j0i512j0i22i30l8.1608j1j9&sourceid=chrome&ie=UTF-8");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e1) {
+				System.out.println("Website didnt open");
+				e1.printStackTrace();
+			} 
+			
+		String curres = driver.findElement(By.xpath("//*[@id=\"knowledge-currency__updatable-data-column\"]/div[1]/div[2]/span[1]")).getText();
 		double exchangerate = Double.parseDouble(curres);
 		driver.close();
 		return exchangerate;}
 		
-		else if (curr == "GBP") {String curres = driver.findElement(By.xpath("//*[@id=\"notoria-shadow-root\"]/div/div/div/table/tbody/tr[26]/td[5]")).getText();
+		else if (curr == "GBP") {
+			driver.get("https://www.google.com/search?q=pln+to+gbp&rlz=1C1AVFC_enPL907PL907&oq=pln+to+gbp&aqs=chrome..69i57j0i512l3j0i20i263i512j0i512l4j0i390.1872j1j7&sourceid=chrome&ie=UTF-8");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e1) {
+				System.out.println("Website didnt open");
+				e1.printStackTrace();
+			} 
+			String curres = driver.findElement(By.xpath("//*[@id=\"knowledge-currency__updatable-data-column\"]/div[1]/div[2]/span[1]")).getText();
 		double exchangerate = Double.parseDouble(curres);
 		driver.close();
 		return exchangerate;}
 		
-		else if (curr == "USD") {String curres = driver.findElement(By.xpath("//*[@id=\"notoria-shadow-root\"]/div/div/div/table/tbody/tr[41]/td[5]")).getText();
+		else if (curr == "USD") {
+			driver.get("https://www.google.com/search?q=pln+to+usd&rlz=1C1AVFC_enPL907PL907&oq=pln+to+usd&aqs=chrome..69i57j0i512l5j0i20i263i512j0i512l3.2488j1j7&sourceid=chrome&ie=UTF-8");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e1) {
+				System.out.println("Website didnt open");
+				e1.printStackTrace();
+			} 
+			String curres = driver.findElement(By.xpath("//*[@id=\"knowledge-currency__updatable-data-column\"]/div[1]/div[2]/span[1]")).getText();
 		double exchangerate = Double.parseDouble(curres);
 		driver.close();
 		return exchangerate;}

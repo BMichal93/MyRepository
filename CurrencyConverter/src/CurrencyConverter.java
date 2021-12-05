@@ -1,33 +1,42 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 public class CurrencyConverter {
+	static NumberFormat decimalf = new DecimalFormat("#0.00");     
+	static JTextField t1=new JTextField(); 
+	static JButton b1 = new JButton("Calculate");
+	static JTextField t2=new JTextField();  
+	static String[] CurrenciesString = { "USD", "GBP", "EUR", "CHF" };
+	static JComboBox d1 = new JComboBox(CurrenciesString);
+	static String[] PLN = { "to PLN", "from PLN" };
+	static JComboBox d2 = new JComboBox(PLN);
+
 	
-	public static String[] CreateGUI() {
-		JFrame f= new JFrame("Currency converter");    
-		JTextField t1=new JTextField();  
+	public static void CreateGUI() {
+		JFrame f= new JFrame("Currency converter"); 
 		t1.setBounds(30,100, 100,30);   
 		f.add(t1);  
 		f.setSize(400,300);  
 		f.setLayout(null);  
 		f.setVisible(true);  
-		//Create label amount 1
+		
 		JLabel l1 = new JLabel("Amount");
 		l1.setBounds(30,70,200,30);
 		f.add(l1);
 		l1.setVisible(true);
 		//Create button
-		JButton b1 = new JButton("Calculate");
+		
 		f.add(b1);
 		b1.setBounds(150,200,100,30);
 		b1.setVisible(true);
 		
-		JTextField t2=new JTextField();  
+		
 		t2.setBounds(270,100, 100,30);   
 		f.add(t2);  
-		//Create label amount 1
+		
 		JLabel l2 = new JLabel("Amount calculated");
 		l2.setBounds(270,70,200,30);
 		f.add(l2);
@@ -38,34 +47,17 @@ public class CurrencyConverter {
 		f.add(l3);
 		l3.setVisible(true);
 		
-		String[] CurrenciesString = { "USD", "GBP", "EUR", "CHF" };
-		JComboBox d1 = new JComboBox(CurrenciesString);
+		
 		f.add(d1);
 		d1.setSelectedIndex(3);
 		d1.setBounds(30,140,100,30);
 		d1.setVisible(true);
 		
-		String[] PLN = { "PLN" };
-		JComboBox d2 = new JComboBox(PLN);
+		
 		f.add(d2);
 		d2.setSelectedIndex(0);
-		d2.enable(false);
 		d2.setBounds(270,140,100,30);
 		d2.setVisible(true);
-		
-		String amount1 = t1.getText();
-		String amount2 = t2.getText();
-		String curr1 = (String) d1.getSelectedItem();
-		String curr2 = (String) d2.getSelectedItem();
-		  
-		String[] results = new String[4];
-
-		    results[0] = amount1;
-		    results[1] = amount2;
-		    results[2] = curr1;
-		    results[3] = curr2;
-		
-		return results;
 		
 	
 		
@@ -73,11 +65,42 @@ public class CurrencyConverter {
 	}
 	public static void main(String[] args) {
 		CreateGUI();
-		GetCurrencyValue toconvert = new GetCurrencyValue();
-		double result = toconvert.GetCurrencyValue("EUR");
-		JFrame jFrame = new JFrame();
-        JOptionPane.showMessageDialog(jFrame, result);
 		
+		b1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	String amountvaluestr = t1.getText();	
+        			isNumeric validation = new isNumeric();
+        			boolean validateinput = validation.isNumeric(amountvaluestr);
+        			if (validateinput == false) {
+        				 JOptionPane.showMessageDialog(null, "Exception - input should be numbers!");
+        				 System.exit(0);
+        			}
+        			
+            	String ch1 = (String)d1.getSelectedItem();
+            	String ch1val = d1.getSelectedItem().toString();
+            	GetCurrencyValue toconvert = new GetCurrencyValue();
+            	double exrange = toconvert.GetCurrencyValue(ch1val);
+            	String ch2 = (String)d2.getSelectedItem();
+            	String ch2val = d2.getSelectedItem().toString();
+            		
+            	double amountvalue = Double.parseDouble(amountvaluestr); 
+            	
+            	if (ch2val == "to PLN") {
+					String resultfin = Double.toString(amountvalue/exrange);
+					System.out.println(resultfin);
+				    t2.setText(resultfin);
+				}
+				else {
+					String resultfin = Double.toString(amountvalue*exrange);
+				    t2.setText(resultfin);
+				}
+            	
+            }
+		});
+		
+		
+
 
 	}
 

@@ -1,11 +1,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
+import java.lang.Math;
 import javax.swing.*;
+
 public class CurrencyConverter {
-	static NumberFormat decimalf = new DecimalFormat("#0.00");     
 	static JTextField t1=new JTextField(); 
 	static JButton b1 = new JButton("Calculate");
 	static JTextField t2=new JTextField();  
@@ -87,12 +85,11 @@ public class CurrencyConverter {
             	double amountvalue = Double.parseDouble(amountvaluestr); 
             	
             	if (ch2val == "to PLN") {
-					String resultfin = Double.toString(amountvalue/exrange);
-					System.out.println(resultfin);
+					String resultfin = Double.toString(Math.round((amountvalue/exrange)*100.0) / 100.0);
 				    t2.setText(resultfin);
 				}
 				else {
-					String resultfin = Double.toString(amountvalue*exrange);
+					String resultfin = Double.toString(Math.round((amountvalue*exrange)*100.0) / 100.0);
 				    t2.setText(resultfin);
 				}
             	
